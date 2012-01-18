@@ -1,6 +1,6 @@
 <html>
     <head>
-        <title>Grails Spring Security Shibboleth SP - Test Application</title>
+        <title>Grails Spring Security LDAP - Test Application</title>
         <meta name="layout" content="main" />
         <style type="text/css" media="screen">
 
@@ -59,7 +59,7 @@
 			margin-top: 0.5em;
 			margin-left: 2em;
 			clear:right;
-			background-color: #F81;
+			background-color: #bbd;
 		}
         </style>
     </head>
@@ -94,7 +94,7 @@
             </div>
         </div>
         <div id="pageBody">
-			<h1>Grails Spring Security Shibboleth SP - Test Application</h1>
+			<h1>Grails Spring Security LDAP - Test Application</h1>
 
 			<h2>Link to Secured Page</h2>
 			<p><g:link controller="secure" action="index">Web Page Secured using Annotation</g:link></p>
@@ -102,17 +102,19 @@
 			<h2>Authentication Information</h2>
 			<hr/>
 			<dl>
-				<dt>token</dt>
-				<dd>${token}</dd>
-
-				<dt>username</dt>
-				<dd>${username}</dd>
-
+				<dt>token</dt>          <dd>${token}</dd>
+				<dt>username</dt>       <dd>${username}</dd>
 				<dt>authorities</dt>
-				<dd>${authorities}</dd>
-
-				<dt>authenticated</dt>
-				<dd>${authenticated}</dd>
+				<dd>
+					<ul>
+					<g:each var="a" in="${authorities}">
+						<li>${a}</li>
+					</g:each>
+					</ul>
+				</dd>
+				<dt>authenticated</dt>  <dd>${authenticated}</dd>
+				<dt>authentication</dt> <dd>${authentication}</dd>
+				<dt>principal</dt>      <dd>${principal}</dd>
 			</dl>
 			<hr/>
 
@@ -120,59 +122,9 @@
             <h2>Spring Security Filter Link</h2>
 
 			<hr/>
-			<p>Spring Secuirty Filter <a href="${resource(file:'/')}j_spring_shibboleth_native_sp_security_check">Shibboleth</a>.</p>
-			<p>Spring Secuirty Filter <a href="${resource(file:'/')}j_spring_mock_security_check">Mock</a>.</p>
-			<p>Spring Secuirty Filter <a href="${resource(file:'/')}j_spring_security_logout">Logout</a>.</p>
+			<p>Spring Security Filter <a href="${resource(file:'/')}j_spring_security_check">Spring Security Core</a>.</p>
+			<p>Spring Security Filter <a href="${resource(file:'/')}j_spring_security_logout">Logout</a>.</p>
 			<hr/>
-
-            <h2>Shibboleth Native SP Links</h2>
-
-			<hr/>
-			<p>Shibboleth.sso <a href="/Shibboleth.sso/Login?target=/Shibboleth.sso/Session">Login</a>.</p>
-			<p>Shibboleth.sso <a href="/Shibboleth.sso/Logout">Logout</a>.</p>
-			<p>Shibboleth.sso <a href="https://localhost/Shibboleth.sso/Status">Shibboleth Status (localhost)</a>.</p>
-			<p>Shibboleth.sso <a href="/Shibboleth.sso/Session">Session Information</a>.</p>
-			<p>Shibboleth.sso <a href="/Shibboleth.sso/Metadata">Generated Metadata</a>.</p>
-			<hr/>
-
-			<h3>Default Shibboleth Attributes</h3>
-			<div class="message">
-				<p>If these are empty when deployed to your shibboleth aware servlet container (Tomcat), check the following items:</p>
-				<ul>
-					<li>Ensure that you've added a JkEnvVar directive for each environment variable you want Apache to expose to Tomcat.
-					Typically this is in "/etc/apache2/mods-available/jk.conf"</li>
-					<li>Ensure that you've added an AuthType shibboleth setting to your apache config file.
-					Typically this is in "/etc/apache2/sites-enabled/YOURSITECONFIG" </li>
-					<li>Ensure that you've disabled tomcatAuthentication in your tomcat config file.
-					Typically this is in "/etc/tomcat6/server.xml"</li>
-					<li>If you require login for this application (not passive login), then make sure that
-					"ShibRequestSetting requireSession 1", and "Require valid-user" is set in your apache site configuration.</li>
-				</ul>
-			</div>
-			<dl>
-				<dt>AUTH_TYPE</dt>
-				<dd>${request.authType}</dd>
-				<dt>REMOTE_USER</dt>
-				<dd>${request.remoteUser}</dd>
-
-				<dt>EPPN</dt>
-				<dd>${request['eppn']}</dd>
-
-				<dt>Shib-Application-ID</dt>
-				<dd>${request['Shib-Application-ID']}</dd>
-				<dt>Shib-Authentication-Instant</dt>
-				<dd>${request['Shib-Authentication-Instant']}</dd>
-				<dt>Shib-Session-Index</dt>
-				<dd>${request['Shib-Session-Index']}</dd>
-				<dt>Shib-Authentication-Method</dt>
-				<dd>${request['Shib-Authentication-Method']}</dd>
-				<dt>Shib-Identity-Provider</dt>
-				<dd>${request['Shib-Identity-Provider']}</dd>
-				<dt>Shib-AuthnContext-Class</dt>
-				<dd>${request['Shib-AuthnContext-Class']}</dd>
-				<dt>Shib-Session-ID</dt>
-				<dd>${request['Shib-Session-ID']}</dd>
-			</dl>
 
 			<h3>Request Attributes</h3>
 			<dl>

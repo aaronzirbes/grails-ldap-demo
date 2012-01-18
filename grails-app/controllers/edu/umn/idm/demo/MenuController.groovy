@@ -15,12 +15,15 @@ class MenuController {
 		if (auth.class.toString().contains('AnonymousAuthenticationToken') ) {
 			username = 'ANONYMOUS'
 		} else {
-			username = auth["username"]
-			authorities = auth["authorities"]
-			authenticated = auth["authenticated"]
+			def principal = auth.principal
+			username = principal.username
+			authorities = principal["authorities"]
+			authenticated = auth.authenticated
 		}
 
 		[ token: token,
+		authentication: auth,
+		principal: principal,
 		username: username,
 		authorities: authorities,
 		authenticated: authenticated ]
